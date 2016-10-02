@@ -16,6 +16,7 @@ public class Users {
     @XmlElement(name="users")
     private List<User> userslist;
     private static Users instance;
+    private static int id;
 
     public Users() {
         userslist = new ArrayList<User>();
@@ -23,8 +24,10 @@ public class Users {
 
     //singleton
     public synchronized static Users getInstance(){
-        if(instance==null)
+        if(instance==null){
+        	Users.setId(-1);
             instance = new Users();
+            }
         return instance;
     }
 
@@ -36,22 +39,22 @@ public class Users {
         this.userslist = userslist;
     }
 
-    public synchronized void  add(User u){
-    	List <User> usersCopy = getUserslist();
+    public synchronized User addUser(User u){
+    	/*List <User> usersCopy = getUserslist();
     	for(User u2: usersCopy){
     		if(u2.getId() == u.getId()){
     			return;
     		}
-    	}
+    	}*/
+    	u.setId(getIncrementedId());
         userslist.add(u);
+        return u;
     }
 
-    public User getByName(String name){
-
+    public User getById(int id){
         List<User> usersCopy = getUserslist();
-
         for(User u: usersCopy)
-            if(u.getName().toLowerCase().equals(name.toLowerCase()))
+            if(u.getId() == id)
                 return u;
         return null;
     }
@@ -78,5 +81,18 @@ public class Users {
 		userslist = usersCopy;
 		}
     }
+
+	private static int getIncrementedId() {
+		id = id + 1;
+		return id;
+	}
+
+	private static void setId(int id) {
+		Users.id = id;
+	}
+	
+	public int getId(){
+		return id;
+	}
 
 }

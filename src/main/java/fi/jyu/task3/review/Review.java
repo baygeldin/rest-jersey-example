@@ -3,27 +3,25 @@ package fi.jyu.task3.review;
 
 public class Review {
 
-    private String id;
+    private int id;
     private String author;
     private String text;
     private String date;
 
     public Review(){}
 
-    public Review(String id, String author, String text, String date) {
-        this.id = id;
+    public Review(String author, String text, String date) {
+        this.id = 0;
         this.author = author;
         this.text = text;
         this.date = date;
     }
 
-    public String getId() {
+    public int getId() {
+    	id++;
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getAuthor() {
         return author;

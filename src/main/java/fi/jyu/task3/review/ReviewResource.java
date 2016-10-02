@@ -16,14 +16,15 @@ public class ReviewResource {
     }
 
     @GET
-    public Response getCommentslist(){
+    public Response getReviewslist(){
         return Response.ok(reviewsList).build();
     }
 
     @Path("/add")
     @POST
     @Consumes({"application/json", "application/xml"})
-    public Response addComment(Review c){
+    public Response addReview(Review c){
+    	
         reviewsList.add(c);
         return Response.ok().build();
     }

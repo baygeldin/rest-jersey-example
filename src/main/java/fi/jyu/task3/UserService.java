@@ -1,6 +1,8 @@
 package fi.jyu.task3;
 
 
+import java.net.URI;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -9,7 +11,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import fi.jyu.task3.review.ReviewResource;
 import fi.jyu.task3.user.User;
@@ -33,17 +37,20 @@ public class UserService {
     @Consumes({"application/json", "application/xml"})
     @Produces({"application/json", "application/xml"})
     
-    public Response addUser(User u){
-        Users.getInstance().add(u);
-        return Response.ok().build();
+    public Response addUser(User u, @Context UriInfo uriInfo){
+        User newUser = Users.getInstance().addUser(u);
+        String newId = String.valueOf(newUser.getId());
+        URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();        
+        return Response.created(uri)
+        			   .entity(newUser).build();
     }
 
     //return an user
-    @Path("/{name}")
+    @Path("/{id}")
     @GET
     @Produces({"application/json", "application/xml"})
-    public Response getByName(@PathParam("name") String name){
-        User u = Users.getInstance().getByName(name);
+    public Response getByName(@PathParam("id") int id){
+        User u = Users.getInstance().getById(id);
         if(u!=null)
             return Response.ok(u).build();
         else
