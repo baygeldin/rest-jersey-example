@@ -1,8 +1,11 @@
 package fi.jyu.task3;
 
 
+<<<<<<< HEAD
 import java.net.URI;
 
+=======
+>>>>>>> c670216fe99f51b46273426de6dc8948a7da371f
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -11,9 +14,13 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+<<<<<<< HEAD
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+=======
+import javax.ws.rs.core.Response;
+>>>>>>> c670216fe99f51b46273426de6dc8948a7da371f
 
 import fi.jyu.task3.review.ReviewResource;
 import fi.jyu.task3.user.User;
@@ -37,6 +44,7 @@ public class UserService {
     @Consumes({"application/json", "application/xml"})
     @Produces({"application/json", "application/xml"})
     
+<<<<<<< HEAD
     public Response addUser(User u, @Context UriInfo uriInfo){
         User newUser = Users.getInstance().addUser(u);
         String newId = String.valueOf(newUser.getId());
@@ -51,6 +59,19 @@ public class UserService {
     @Produces({"application/json", "application/xml"})
     public Response getByName(@PathParam("id") int id){
         User u = Users.getInstance().getById(id);
+=======
+    public Response addUser(User u){
+        Users.getInstance().add(u);
+        return Response.ok().build();
+    }
+
+    //return an user
+    @Path("/{name}")
+    @GET
+    @Produces({"application/json", "application/xml"})
+    public Response getByName(@PathParam("name") String name){
+        User u = Users.getInstance().getByName(name);
+>>>>>>> c670216fe99f51b46273426de6dc8948a7da371f
         if(u!=null)
             return Response.ok(u).build();
         else

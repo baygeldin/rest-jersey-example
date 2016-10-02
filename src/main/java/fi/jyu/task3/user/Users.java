@@ -16,7 +16,10 @@ public class Users {
     @XmlElement(name="users")
     private List<User> userslist;
     private static Users instance;
+<<<<<<< HEAD
     private static int id;
+=======
+>>>>>>> c670216fe99f51b46273426de6dc8948a7da371f
 
     public Users() {
         userslist = new ArrayList<User>();
@@ -24,10 +27,15 @@ public class Users {
 
     //singleton
     public synchronized static Users getInstance(){
+<<<<<<< HEAD
         if(instance==null){
         	Users.setId(-1);
             instance = new Users();
             }
+=======
+        if(instance==null)
+            instance = new Users();
+>>>>>>> c670216fe99f51b46273426de6dc8948a7da371f
         return instance;
     }
 
@@ -39,12 +47,18 @@ public class Users {
         this.userslist = userslist;
     }
 
+<<<<<<< HEAD
     public synchronized User addUser(User u){
     	/*List <User> usersCopy = getUserslist();
+=======
+    public synchronized void  add(User u){
+    	List <User> usersCopy = getUserslist();
+>>>>>>> c670216fe99f51b46273426de6dc8948a7da371f
     	for(User u2: usersCopy){
     		if(u2.getId() == u.getId()){
     			return;
     		}
+<<<<<<< HEAD
     	}*/
     	u.setId(getIncrementedId());
         userslist.add(u);
@@ -55,6 +69,18 @@ public class Users {
         List<User> usersCopy = getUserslist();
         for(User u: usersCopy)
             if(u.getId() == id)
+=======
+    	}
+        userslist.add(u);
+    }
+
+    public User getByName(String name){
+
+        List<User> usersCopy = getUserslist();
+
+        for(User u: usersCopy)
+            if(u.getName().toLowerCase().equals(name.toLowerCase()))
+>>>>>>> c670216fe99f51b46273426de6dc8948a7da371f
                 return u;
         return null;
     }
@@ -82,6 +108,7 @@ public class Users {
 		}
     }
 
+<<<<<<< HEAD
 	private static int getIncrementedId() {
 		id = id + 1;
 		return id;
@@ -95,4 +122,6 @@ public class Users {
 		return id;
 	}
 
+=======
+>>>>>>> c670216fe99f51b46273426de6dc8948a7da371f
 }
