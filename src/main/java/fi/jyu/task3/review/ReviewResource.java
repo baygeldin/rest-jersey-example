@@ -16,23 +16,15 @@ public class ReviewResource {
     }
 
     @GET
-<<<<<<< HEAD
     public Response getReviewslist(){
-=======
-    public Response getCommentslist(){
->>>>>>> c670216fe99f51b46273426de6dc8948a7da371f
         return Response.ok(reviewsList).build();
     }
 
     @Path("/add")
     @POST
     @Consumes({"application/json", "application/xml"})
-<<<<<<< HEAD
     public Response addReview(Review c){
     	
-=======
-    public Response addComment(Review c){
->>>>>>> c670216fe99f51b46273426de6dc8948a7da371f
         reviewsList.add(c);
         return Response.ok().build();
     }
