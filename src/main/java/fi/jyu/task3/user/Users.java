@@ -37,6 +37,12 @@ public class Users {
     }
 
     public synchronized void  add(User u){
+    	List <User> usersCopy = getUserslist();
+    	for(User u2: usersCopy){
+    		if(u2.getId() == u.getId()){
+    			return;
+    		}
+    	}
         userslist.add(u);
     }
 
@@ -48,6 +54,29 @@ public class Users {
             if(u.getName().toLowerCase().equals(name.toLowerCase()))
                 return u;
         return null;
+    }
+    
+    public void updateUser(User u){
+    	List<User> usersCopy = getUserslist();
+    	for(int i = 0; i < usersCopy.size(); i++)
+            if(usersCopy.get(i).getId() == u.getId()){
+            	usersCopy.remove(i);
+            	usersCopy.add(u);
+            	break;
+		}
+    	userslist = usersCopy;
+
+    }
+    
+    public void removeByID(int id){
+    	List<User> usersCopy = getUserslist();
+    	for (int i = 0; i < usersCopy.size(); i++) {
+			if (usersCopy.get(i).getId() == id){
+				usersCopy.remove(i);
+				break;
+			}
+		userslist = usersCopy;
+		}
     }
 
 }

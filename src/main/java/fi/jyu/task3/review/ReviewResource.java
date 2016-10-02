@@ -1,4 +1,4 @@
-package fi.jyu.task3.comment;
+package fi.jyu.task3.review;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -7,24 +7,24 @@ import javax.ws.rs.core.Response;
 @Path("/")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class CommentResource {
-    private Comments commentsList;
+public class ReviewResource {
+    private Reviews reviewsList;
 
-    public CommentResource(String name){
-        this.commentsList = Comments.getInstance(name);
+    public ReviewResource(String name){
+        this.reviewsList = Reviews.getInstance(name);
         System.out.println(name);
     }
 
     @GET
     public Response getCommentslist(){
-        return Response.ok(commentsList).build();
+        return Response.ok(reviewsList).build();
     }
 
     @Path("/add")
     @POST
     @Consumes({"application/json", "application/xml"})
-    public Response addComment(Comment c){
-        commentsList.add(c);
+    public Response addComment(Review c){
+        reviewsList.add(c);
         return Response.ok().build();
     }
 

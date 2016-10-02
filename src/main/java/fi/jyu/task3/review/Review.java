@@ -1,16 +1,16 @@
-package fi.jyu.task3.comment;
+package fi.jyu.task3.review;
 
 
-public class Comment {
+public class Review {
 
     private String id;
     private String author;
     private String text;
     private String date;
 
-    public Comment(){}
+    public Review(){}
 
-    public Comment(String id, String author, String text, String date) {
+    public Review(String id, String author, String text, String date) {
         this.id = id;
         this.author = author;
         this.text = text;

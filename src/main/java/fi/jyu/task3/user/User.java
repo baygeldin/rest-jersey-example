@@ -1,7 +1,15 @@
 package fi.jyu.task3.user;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
+
+import fi.jyu.task3.user.link.Link;
+
+
+
 
 @XmlRootElement
 public class User {
@@ -12,8 +20,16 @@ public class User {
     private String nickname;
     private String birth;
     private String age;
-
+    private List<Link> links = new ArrayList<>();
+    
     public User(){}
+    public void addLink(String url, String rel) {
+    	Link link = new Link();
+    	link.setLink(url);
+    	link.setRel(rel);
+    	links.add(link);
+    	
+    }
 
     public User(int id, String name, String surname, String nickname, String birth, String age) {
         this.id = id;
@@ -55,4 +71,10 @@ public class User {
     public int getId() {return id; }
 
     public void setId(int id) {  this.id = id; }
+	public List<Link> getLinks() {
+		return links;
+	}
+	public void setLinks(List<Link> links) {
+		this.links = links;
+	}
 }
