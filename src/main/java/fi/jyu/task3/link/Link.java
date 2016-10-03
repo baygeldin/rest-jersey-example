@@ -1,5 +1,6 @@
 package fi.jyu.task3.link;
 
+
 public class Link {
 	private String link;
 	private String rel;

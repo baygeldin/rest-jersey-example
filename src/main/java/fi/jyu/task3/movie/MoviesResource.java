@@ -28,10 +28,32 @@ public class MoviesResource {
     @Consumes({"application/json", "application/xml"})
     @Produces({"application/json", "application/xml"})
     public Response addMovie(Movie movie, @Context UriInfo uriInfo){
-        Movie newMovie = moviesService.addMovie(movie);
+    	Movie newMovie = moviesService.addMovie(movie);
         String newId = String.valueOf(newMovie.getId());
-        URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();        
-        return Response.created(uri)
+        
+        URI uri = uriInfo.getBaseUriBuilder()
+        		.path(MoviesResource.class)
+            	.path(newId)
+            	.build();
+        newMovie.addLink(uri, "self");
+            	
+    	uri = uriInfo.getBaseUriBuilder()
+    		      .path(MoviesResource.class)
+    		      .path(MoviesResource.class, "getReviewsResource")
+    		      .resolveTemplate("id", newId)
+    		      .build();
+    	newMovie.addLink(uri, "reviews");
+    	
+    	uri = uriInfo.getBaseUriBuilder()
+  		      .path(MoviesResource.class)
+  		      .path(MoviesResource.class, "getTrailersResource")
+  		      .resolveTemplate("id", newId)
+  		      .build();
+    	newMovie.addLink(uri, "trailers");
+    	
+    	uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
+        
+    	return Response.created(uri)
         			   .entity(newMovie).build();
     }
 

@@ -6,7 +6,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
 import fi.jyu.task3.movie.Movie;
+import fi.jyu.task3.movie.MoviesResource;
 import fi.jyu.task3.movie.MoviesService;
+import fi.jyu.task3.review.ReviewsResource;
 
 @Path("/trailers")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -67,7 +69,22 @@ public class TrailersResource {
     	
     	Trailer newTrailer = trailersService.addTrailer(trailer);
         String newId = String.valueOf(newTrailer.getId());
-        URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();        
+        
+        URI uri = uriInfo.getBaseUriBuilder()
+        		.path(ReviewsResource.class)
+            	.path(newId)
+            	.build();
+        newTrailer.addLink(uri, "self");
+        
+        uri = uriInfo.getBaseUriBuilder()
+    		      .path(MoviesResource.class)
+    		      .path(MoviesResource.class, "getMovie")
+    		      .resolveTemplate("id", String.valueOf(newTrailer.getMovie().getId()))
+    		      .build();
+        newTrailer.addLink(uri, "movie");
+        
+        uri = uriInfo.getAbsolutePathBuilder().path(newId).build(); 
+        
         return Response.created(uri)
         			   .entity(newTrailer).build();
     }

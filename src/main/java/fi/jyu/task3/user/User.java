@@ -1,6 +1,7 @@
 package fi.jyu.task3.user;
 
 
+import java.net.URI;
 import java.util.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -29,12 +30,11 @@ public class User {
 		this.links = links;
 	}
     
-    public void addLink(String url, String rel) {
+    public void addLink(URI url, String rel) {
     	Link link = new Link();
-    	link.setLink(url);
+    	link.setLink(url.toString());
     	link.setRel(rel);
     	links.add(link);
-    	
     }
 
 	public int getId() {

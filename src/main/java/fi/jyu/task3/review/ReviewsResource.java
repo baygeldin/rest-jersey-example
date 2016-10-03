@@ -7,8 +7,10 @@ import javax.ws.rs.core.*;
 
 import fi.jyu.task3.exception.IAmATeapotException;
 import fi.jyu.task3.movie.Movie;
+import fi.jyu.task3.movie.MoviesResource;
 import fi.jyu.task3.movie.MoviesService;
 import fi.jyu.task3.user.User;
+import fi.jyu.task3.user.UsersResource;
 import fi.jyu.task3.user.UsersService;
 
 @Path("/reviews")
@@ -96,7 +98,29 @@ public class ReviewsResource {
     	
         Review newReview = reviewsService.addReview(review);
         String newId = String.valueOf(newReview.getId());
-        URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();        
+        
+        URI uri = uriInfo.getBaseUriBuilder()
+        		.path(ReviewsResource.class)
+            	.path(newId)
+            	.build();
+        newReview.addLink(uri, "self");
+        
+        uri = uriInfo.getBaseUriBuilder()
+    		      .path(UsersResource.class)
+    		      .path(UsersResource.class, "getUser")
+    		      .resolveTemplate("id", String.valueOf(newReview.getAuthor().getId()))
+    		      .build();
+        newReview.addLink(uri, "author");
+        
+        uri = uriInfo.getBaseUriBuilder()
+  		      .path(MoviesResource.class)
+  		      .path(MoviesResource.class, "getMovie")
+  		      .resolveTemplate("id", String.valueOf(newReview.getMovie().getId()))
+  		      .build();
+        newReview.addLink(uri, "movie");
+        
+        uri = uriInfo.getAbsolutePathBuilder().path(newId).build();  
+        
         return Response.created(uri)
         			   .entity(newReview).build();
     }

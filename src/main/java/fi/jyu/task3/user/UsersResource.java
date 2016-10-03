@@ -26,24 +26,23 @@ public class UsersResource {
     public Response addUser(User user, @Context UriInfo uriInfo){
         User newUser = usersService.addUser(user);
         String newId = String.valueOf(newUser.getId());
-        URI uri2 = uriInfo.getAbsolutePathBuilder().path(newId).build(); 
-        String uri = uriInfo.getBaseUriBuilder()
+        
+        URI uri = uriInfo.getBaseUriBuilder()
         		.path(UsersResource.class)
-            	.path(Long.toString(newUser.getId()))
-            	.build()
-            	.toString();
-            	newUser.addLink(uri,"self");
+            	.path(newId)
+            	.build();
+        newUser.addLink(uri, "self");
             	
     	uri = uriInfo.getBaseUriBuilder()
     		      .path(UsersResource.class)
-    		      .path(UsersResource.class, "getReviewResource")  
-    		      .resolveTemplate("id", newUser.getId())
-    		      .build()
-    		      .toString();
-    		newUser.addLink(uri,"reviews");
-    		newId = String.valueOf(newUser.getId());
-    		URI uri3 = uriInfo.getAbsolutePathBuilder().path(newId).build();
-        return Response.created(uri3)
+    		      .path(UsersResource.class, "getReviewsResource")
+    		      .resolveTemplate("id", newId)
+    		      .build();
+    	newUser.addLink(uri, "reviews");
+    	
+    	uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
+        
+    	return Response.created(uri)
         			   .entity(newUser).build();
     }
     
@@ -91,7 +90,7 @@ public class UsersResource {
     }
     
     @Path("/{id}/reviews")
-    public ReviewsResource getReviewResource(@PathParam("id") int id) {
+    public ReviewsResource getReviewsResource(@PathParam("id") int id) {
         return new ReviewsResource(usersService.getUser(id));
     }
 }
