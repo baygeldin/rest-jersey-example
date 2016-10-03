@@ -4,7 +4,8 @@ package fi.jyu.task3.movie;
 import java.util.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import fi.jyu.task3.user.link.Link;
+import fi.jyu.task3.link.Link;
+
 
 @XmlRootElement
 public class Movie {

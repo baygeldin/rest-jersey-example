@@ -4,7 +4,7 @@ package fi.jyu.task3.user;
 import java.util.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import fi.jyu.task3.user.link.Link;
+import fi.jyu.task3.link.Link;
 
 @XmlRootElement
 public class User {
@@ -14,7 +14,7 @@ public class User {
     private List<Link> links = new ArrayList<>();
     
     public User(){}
-
+    
     public User(int id, String name, Date birth) {
         this.setId(id);
         this.setName(name);

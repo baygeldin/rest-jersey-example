@@ -1,14 +1,14 @@
-package fi.jyu.task3.user.link;
+package fi.jyu.task3.link;
 
 public class Link {
-	private String Link;
+	private String link;
 	private String rel;
 	
 	public String getLink() {
-		return Link;
+		return link;
 	}
-	public void setLink(String link) {
-		Link = link;
+	public void setLink(String uri) {
+		this.link = uri;
 	}
 	public String getRel() {
 		return rel;
