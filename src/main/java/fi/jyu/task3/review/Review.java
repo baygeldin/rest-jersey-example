@@ -1,49 +1,55 @@
 package fi.jyu.task3.review;
 
+import javax.xml.bind.annotation.XmlRootElement;
 
+import fi.jyu.task3.movie.Movie;
+import fi.jyu.task3.user.User;
+
+@XmlRootElement
 public class Review {
-
     private int id;
-    private String author;
-    private String text;
-    private String date;
+    private User author;
+    private Movie movie;
+    private String content;
 
     public Review(){}
 
-    public Review(String author, String text, String date) {
-        this.id = 0;
-        this.author = author;
-        this.text = text;
-        this.date = date;
+    public Review(int id, User author, Movie movie, String content) {
+        this.setId(id);
+        this.setAuthor(author);
+        this.setMovie(movie);
+        this.setContent(content);
     }
 
-    public int getId() {
-    	id++;
-        return id;
-    }
+	public String getContent() {
+		return content;
+	}
 
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public String getAuthor() {
-        return author;
-    }
+	public Movie getMovie() {
+		return movie;
+	}
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+	public void setMovie(Movie movie) {
+		this.movie = movie;
+	}
 
-    public String getText() {
-        return text;
-    }
+	public User getAuthor() {
+		return author;
+	}
 
-    public void setText(String text) {
-        this.text = text;
-    }
+	public void setAuthor(User author) {
+		this.author = author;
+	}
 
-    public String getDate() {
-        return date;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 }
