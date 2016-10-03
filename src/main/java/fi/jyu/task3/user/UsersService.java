@@ -41,7 +41,6 @@ public class UsersService {
 	public synchronized User addUser(User user) {
 		user.setId(usersList.size());
 		usersList.add(user);
-		
 		return user;
 	}
 	

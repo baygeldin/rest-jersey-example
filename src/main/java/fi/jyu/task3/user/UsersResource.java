@@ -26,11 +26,28 @@ public class UsersResource {
     public Response addUser(User user, @Context UriInfo uriInfo){
         User newUser = usersService.addUser(user);
         String newId = String.valueOf(newUser.getId());
-        URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();        
-        return Response.created(uri)
+        URI uri2 = uriInfo.getAbsolutePathBuilder().path(newId).build(); 
+        String uri = uriInfo.getBaseUriBuilder()
+        		.path(UsersResource.class)
+            	.path(Long.toString(newUser.getId()))
+            	.build()
+            	.toString();
+            	newUser.addLink(uri,"self");
+            	
+    	uri = uriInfo.getBaseUriBuilder()
+    		      .path(UsersResource.class)
+    		      .path(UsersResource.class, "getReviewResource")  
+    		      .path(ReviewsResource.class)
+    		      .resolveTemplate("id", newUser.getId())
+    		      .build()
+    		      .toString();
+    		newUser.addLink(uri,"reviews");
+    		newId = String.valueOf(newUser.getId());
+    		URI uri3 = uriInfo.getAbsolutePathBuilder().path(newId).build();
+        return Response.created(uri3)
         			   .entity(newUser).build();
     }
-
+    
     @Path("/{id}")
     @GET
     @Produces({"application/json", "application/xml"})
