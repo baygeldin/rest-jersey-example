@@ -97,11 +97,26 @@ public class MoviesResource {
     
     @Path("/{id}/reviews")
     public ReviewsResource getReviewsResource(@PathParam("id") int id) {
-        return new ReviewsResource(moviesService.getMovie(id));
+    	Movie movie;
+    	
+    	try {
+    		movie = moviesService.getMovie(id);
+    	} catch(IndexOutOfBoundsException e) {
+        	throw new NotFoundException();
+        }
+    	
+        return new ReviewsResource(movie);
     }
     
     @Path("/{id}/trailers")
     public TrailersResource getTrailersResource(@PathParam("id") int id) {
-        return new TrailersResource(moviesService.getMovie(id));
+    	Movie movie;
+    	
+    	try {
+    		movie = moviesService.getMovie(id);
+    	} catch(IndexOutOfBoundsException e) {
+        	throw new NotFoundException();
+        }
+        return new TrailersResource(movie);
     }
 }

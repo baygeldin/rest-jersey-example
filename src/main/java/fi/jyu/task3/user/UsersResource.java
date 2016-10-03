@@ -86,6 +86,14 @@ public class UsersResource {
     
     @Path("/{id}/reviews")
     public ReviewsResource getReviewsResource(@PathParam("id") int id) {
-        return new ReviewsResource(usersService.getUser(id));
+    	User user;
+    	
+    	try {
+    		user = usersService.getUser(id);
+    	} catch(IndexOutOfBoundsException e) {
+        	throw new NotFoundException();
+        }
+    	
+        return new ReviewsResource(user);
     }
 }
