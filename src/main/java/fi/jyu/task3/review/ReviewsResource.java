@@ -10,7 +10,7 @@ import fi.jyu.task3.movie.MoviesService;
 import fi.jyu.task3.user.User;
 import fi.jyu.task3.user.UsersService;
 
-@Path("/")
+@Path("/reviews")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ReviewsResource {
@@ -23,6 +23,8 @@ public class ReviewsResource {
 	
 	private Movie movie = null;
 	private User user = null;
+	
+	public ReviewsResource(){}
 
     public ReviewsResource(Movie movie){
         this.movie = movie;
@@ -50,7 +52,8 @@ public class ReviewsResource {
     		reviewsList = reviewsService.getReviewsList(movie);
     	}
     	GenericEntity<List<Review>> entity = new GenericEntity<List<Review>>(reviewsList) {};
-        return Response.ok(entity).build();
+        
+    	return Response.ok(entity).build();
     }
     
     @Path("/{id}")
