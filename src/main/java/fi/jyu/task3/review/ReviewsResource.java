@@ -61,7 +61,6 @@ public class ReviewsResource {
     
     @Path("/{id}")
     @GET
-    @Produces({"application/json", "application/xml"})
     public Response getReview(@PathParam("id") int id){
         Review review = null;
         
@@ -75,8 +74,6 @@ public class ReviewsResource {
     }
 
     @POST
-    @Consumes({"application/json", "application/xml"})
-    @Produces({"application/json", "application/xml"})
     public Response addReview(Review review, @Context UriInfo uriInfo){
     	if (review.getContent().equals("Brew me some coffee!")) {
     		throw new IAmATeapotException();
@@ -127,7 +124,6 @@ public class ReviewsResource {
     
     @DELETE
     @Path("/{id}")
-    @Produces({"application/json", "application/xml"})
     public Response removeReview(@PathParam("id") int id)
     {
         try {
@@ -141,8 +137,6 @@ public class ReviewsResource {
     
     @PUT
     @Path("/{id}")
-    @Consumes({"application/json", "application/xml"})
-    @Produces({"application/json", "application/xml"})
     public Response updateReview(@PathParam("id") int id, Review review) {
     	if (review.getContent().equals("Brew me some coffee!")) {
     		throw new IAmATeapotException();

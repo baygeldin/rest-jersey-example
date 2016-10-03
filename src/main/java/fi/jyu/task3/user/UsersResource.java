@@ -9,11 +9,12 @@ import javax.ws.rs.core.*;
 import fi.jyu.task3.review.ReviewsResource;
 
 @Path("/users")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class UsersResource {
 	private UsersService usersService = UsersService.getInstance();
 	
     @GET
-    @Produces({"application/json", "application/xml"})
     public Response getUsersList(){
     	List<User> users = usersService.getUsersList();
     	GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
@@ -21,8 +22,6 @@ public class UsersResource {
     }
 
     @POST
-    @Consumes({"application/json", "application/xml"})
-    @Produces({"application/json", "application/xml"})
     public Response addUser(User user, @Context UriInfo uriInfo){
         User newUser = usersService.addUser(user);
         String newId = String.valueOf(newUser.getId());
@@ -48,7 +47,6 @@ public class UsersResource {
     
     @Path("/{id}")
     @GET
-    @Produces({"application/json", "application/xml"})
     public Response getUser(@PathParam("id") int id){
         User user = null;
         
@@ -63,7 +61,6 @@ public class UsersResource {
     
     @DELETE
     @Path("/{id}")
-    @Produces({"application/json", "application/xml"})
     public Response removeUser(@PathParam("id") int id)
     {
         try {
@@ -77,8 +74,6 @@ public class UsersResource {
     
     @PUT
     @Path("/{id}")
-    @Consumes({"application/json", "application/xml"})
-    @Produces({"application/json", "application/xml"})
     public Response updateUser(@PathParam("id") int id, User user) {
         try {
         	usersService.updateUser(id, user);

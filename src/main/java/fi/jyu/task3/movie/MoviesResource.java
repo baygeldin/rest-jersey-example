@@ -9,11 +9,12 @@ import fi.jyu.task3.review.ReviewsResource;
 import fi.jyu.task3.trailers.TrailersResource;
 
 @Path("/movies")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class MoviesResource {
 	private MoviesService moviesService = MoviesService.getInstance();
 	
     @GET
-    @Produces({"application/json", "application/xml"})
     public Response getMoviesList(@QueryParam("year") int year){
     	List<Movie> movies;
     	if(year > 0)
@@ -25,8 +26,6 @@ public class MoviesResource {
     }
 
     @POST
-    @Consumes({"application/json", "application/xml"})
-    @Produces({"application/json", "application/xml"})
     public Response addMovie(Movie movie, @Context UriInfo uriInfo){
     	Movie newMovie = moviesService.addMovie(movie);
         String newId = String.valueOf(newMovie.getId());
@@ -59,7 +58,6 @@ public class MoviesResource {
 
     @Path("/{id}")
     @GET
-    @Produces({"application/json", "application/xml"})
     public Response getMovie(@PathParam("id") int id){
         Movie movie = null;
         
@@ -74,7 +72,6 @@ public class MoviesResource {
     
     @DELETE
     @Path("/{id}")
-    @Produces({"application/json", "application/xml"})
     public Response removeMovie(@PathParam("id") int id)
     {
         try {
@@ -88,8 +85,6 @@ public class MoviesResource {
     
     @PUT
     @Path("/{id}")
-    @Consumes({"application/json", "application/xml"})
-    @Produces({"application/json", "application/xml"})
     public Response updateMovie(@PathParam("id") int id, Movie movie) {
         try {
         	moviesService.updateMovie(id, movie);

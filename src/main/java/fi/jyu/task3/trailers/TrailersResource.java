@@ -43,7 +43,6 @@ public class TrailersResource {
     
     @Path("/{id}")
     @GET
-    @Produces({"application/json", "application/xml"})
     public Response getTrailer(@PathParam("id") int id){
     	Trailer trailer = null;
         
@@ -57,8 +56,6 @@ public class TrailersResource {
     }
 
     @POST
-    @Consumes({"application/json", "application/xml"})
-    @Produces({"application/json", "application/xml"})
     public Response addTrailer(Trailer trailer, @Context UriInfo uriInfo){
     	if (movie != null) {
     		trailer.setMovie(movie);
@@ -91,7 +88,6 @@ public class TrailersResource {
     
     @DELETE
     @Path("/{id}")
-    @Produces({"application/json", "application/xml"})
     public Response removeTrailer(@PathParam("id") int id)
     {
         try {
@@ -105,8 +101,6 @@ public class TrailersResource {
     
     @PUT
     @Path("/{id}")
-    @Consumes({"application/json", "application/xml"})
-    @Produces({"application/json", "application/xml"})
     public Response updateTrailer(@PathParam("id") int id, Trailer trailer) {
     	if (movie != null) {
     		trailer.setMovie(movie);
