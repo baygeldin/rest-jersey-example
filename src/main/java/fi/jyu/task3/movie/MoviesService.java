@@ -28,6 +28,18 @@ public class MoviesService {
 		
 		return list;
 	}
+	
+	public ArrayList<Movie> getAllMoviesForYear(int year){
+		ArrayList<Movie> listMovieForYear = new ArrayList<Movie>();
+		Calendar cal = Calendar.getInstance();
+		for(Movie movie: moviesList){
+			cal.setTime(movie.getReleaseDate());
+			if (cal.get(Calendar.YEAR) == year){
+				listMovieForYear.add(movie);
+			}
+		}
+		return listMovieForYear;
+	}
 
 	private void setMoviesList(ArrayList<Movie> moviesList) {
 		this.moviesList = moviesList;

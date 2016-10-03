@@ -13,8 +13,12 @@ public class MoviesResource {
 	
     @GET
     @Produces({"application/json", "application/xml"})
-    public Response getMoviesList(){
-    	List<Movie> movies = moviesService.getMoviesList();
+    public Response getMoviesList(@QueryParam("year") int year){
+    	List<Movie> movies;
+    	if(year > 0)
+    		movies = moviesService.getAllMoviesForYear(year); 
+    	else 
+    		movies = moviesService.getMoviesList();
     	GenericEntity<List<Movie>> entity = new GenericEntity<List<Movie>>(movies) {};
         return Response.ok(entity).build();
     }
