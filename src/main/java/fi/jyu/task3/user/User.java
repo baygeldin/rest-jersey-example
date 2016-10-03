@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import fi.jyu.task3.user.link.Link;
+import fi.jyu.task3.link.Link;
 
 
 
@@ -23,9 +23,10 @@ public class User {
     private List<Link> links = new ArrayList<>();
     
     public User(){}
-    public void addLink(String url, String rel) {
+    
+    public void addLink(String uri, String rel) {
     	Link link = new Link();
-    	link.setLink(url);
+    	link.setLink(uri);
     	link.setRel(rel);
     	links.add(link);
     	

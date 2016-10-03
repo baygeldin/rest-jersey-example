@@ -5,10 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import fi.jyu.task3.exception.DataNotFoundException;
+import fi.jyu.task3.exception.ErrorMessage;
 
 
 @XmlRootElement
@@ -18,15 +24,15 @@ public class Reviews {
     @XmlElement(name="reviews")
     private List<Review> reviewList;
 
-    private static Map<String, Reviews> map = new HashMap<>();
+    private static Map<Integer, Reviews> map = new HashMap<>();
     private static Reviews instance;
 
 
-    public synchronized static Reviews getInstance(String name){
-        instance = map.get(name);
+    public synchronized static Reviews getInstance(int id){
+        instance = map.get(id);
         if(instance == null) {
             instance = new Reviews();
-            map.put(name, instance);
+            map.put(id, instance);
             return instance;
         }
         return instance;
@@ -39,6 +45,11 @@ public class Reviews {
     }
 
     public synchronized List<Review> getReviewList() {
+    	if (reviewList.isEmpty()){
+    		ErrorMessage errorMessage = new ErrorMessage("Not found...", 404, "http://myDocs.org"); 
+    		Response response = Response.status(Status.NOT_FOUND).entity(errorMessage).build();
+    				   throw new NotFoundException(response);
+    	}
         return new ArrayList<Review>(reviewList);
     }
 

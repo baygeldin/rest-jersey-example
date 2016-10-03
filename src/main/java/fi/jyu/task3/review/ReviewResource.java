@@ -10,9 +10,8 @@ import javax.ws.rs.core.Response;
 public class ReviewResource {
     private Reviews reviewsList;
 
-    public ReviewResource(String name){
-        this.reviewsList = Reviews.getInstance(name);
-        System.out.println(name);
+    public ReviewResource(int id){
+        this.reviewsList = Reviews.getInstance(id);
     }
 
     @GET

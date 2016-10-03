@@ -4,10 +4,15 @@ package fi.jyu.task3.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import fi.jyu.task3.exception.ErrorMessage;
 
 @XmlRootElement
 @XmlAccessorType (XmlAccessType.FIELD)
@@ -32,6 +37,12 @@ public class Users {
     }
 
     public synchronized List<User> getUserslist() {
+    	System.out.println(userslist.isEmpty());
+    	if (userslist.isEmpty()){
+    		ErrorMessage errorMessage = new ErrorMessage("Not found...", 404, "http://myDocs.org"); 
+    		Response response = Response.status(Status.NOT_FOUND).entity(errorMessage).build();
+    				   throw new NotFoundException(response);
+    	}
         return new ArrayList<User>(userslist);
     }
 
