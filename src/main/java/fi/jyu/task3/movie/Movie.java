@@ -1,9 +1,7 @@
 package fi.jyu.task3.movie;
 
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import fi.jyu.task3.user.link.Link;

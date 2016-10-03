@@ -20,7 +20,14 @@ public class UsersService {
     }
 
 	public ArrayList<User> getUsersList() {
-		return usersList;
+		ArrayList<User> list = new ArrayList<User>();
+		for (User user : usersList) {
+			if (user != null) {
+				list.add(user);
+			}
+		}
+		
+		return list;
 	}
 
 	private void setUsersList(ArrayList<User> usersList) {

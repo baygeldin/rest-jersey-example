@@ -22,13 +22,20 @@ public class ReviewsService {
     }
 
 	public ArrayList<Review> getReviewsList() {
-		return reviewsList;
+		ArrayList<Review> list = new ArrayList<Review>();
+		for (Review review : reviewsList) {
+			if (review != null) {
+				list.add(review);
+			}
+		}
+		
+		return list;
 	}
 	
 	public ArrayList<Review> getReviewsList(User user) {
 		ArrayList<Review> list = new ArrayList<Review>();
 		for (Review review : reviewsList) {
-			if (review.getAuthor() == user) {
+			if (review != null && review.getAuthor() == user) {
 				list.add(review);
 			}
 		}
@@ -39,7 +46,7 @@ public class ReviewsService {
 	public ArrayList<Review> getReviewsList(Movie movie) {
 		ArrayList<Review> list = new ArrayList<Review>();
 		for (Review review : reviewsList) {
-			if (review.getMovie() == movie) {
+			if (review != null && review.getMovie() == movie) {
 				list.add(review);
 			}
 		}

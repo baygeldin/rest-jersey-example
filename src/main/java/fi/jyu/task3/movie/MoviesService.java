@@ -1,6 +1,6 @@
 package fi.jyu.task3.movie;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class MoviesService {
 	private ArrayList<Movie> moviesList;
@@ -19,7 +19,14 @@ public class MoviesService {
     }
 
 	public ArrayList<Movie> getMoviesList() {
-		return moviesList;
+		ArrayList<Movie> list = new ArrayList<Movie>();
+		for (Movie movie : moviesList) {
+			if (movie != null) {
+				list.add(movie);
+			}
+		}
+		
+		return list;
 	}
 
 	private void setMoviesList(ArrayList<Movie> moviesList) {
