@@ -5,6 +5,7 @@ import java.util.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
+import fi.jyu.task3.exception.IAmATeapotException;
 import fi.jyu.task3.movie.Movie;
 import fi.jyu.task3.movie.MoviesService;
 import fi.jyu.task3.user.User;
@@ -75,6 +76,10 @@ public class ReviewsResource {
     @Consumes({"application/json", "application/xml"})
     @Produces({"application/json", "application/xml"})
     public Response addReview(Review review, @Context UriInfo uriInfo){
+    	if (review.getContent().equals("Brew me some coffee!")) {
+    		throw new IAmATeapotException();
+    	}
+    	
     	if (movie != null) {
     		review.setMovie(movie);
     	} else {
@@ -115,6 +120,10 @@ public class ReviewsResource {
     @Consumes({"application/json", "application/xml"})
     @Produces({"application/json", "application/xml"})
     public Response updateReview(@PathParam("id") int id, Review review) {
+    	if (review.getContent().equals("Brew me some coffee!")) {
+    		throw new IAmATeapotException();
+    	}
+    	
     	if (movie != null) {
     		review.setMovie(movie);
     	} else {
