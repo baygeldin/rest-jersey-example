@@ -37,7 +37,6 @@ public class UsersResource {
     	uri = uriInfo.getBaseUriBuilder()
     		      .path(UsersResource.class)
     		      .path(UsersResource.class, "getReviewResource")  
-    		      .path(ReviewsResource.class)
     		      .resolveTemplate("id", newUser.getId())
     		      .build()
     		      .toString();
