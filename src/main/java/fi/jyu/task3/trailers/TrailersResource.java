@@ -17,8 +17,6 @@ public class TrailersResource {
 	private TrailersService trailersService = TrailersService.getInstance();
 	private MoviesService moviesService = MoviesService.getInstance();
 	
-	@QueryParam("movie") Integer movieId;
-	
 	private Movie movie = null;
 	
 	public TrailersResource(){}
@@ -28,8 +26,13 @@ public class TrailersResource {
     }
 
     @GET
-    public Response getTrailersList(){
+    public Response getTrailersList(
+    		@QueryParam("movie") Integer movieId){
     	List<Trailer> trailersList;
+    	
+    	if (movie == null && movieId != null) {
+        	movie = moviesService.getMovie(movieId);
+        }
     	
     	if (movie == null) {
     		trailersList = trailersService.getTrailersList();

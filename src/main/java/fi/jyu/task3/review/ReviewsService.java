@@ -35,6 +35,9 @@ public class ReviewsService {
 	public ArrayList<Review> getReviewsList(User user) {
 		ArrayList<Review> list = new ArrayList<Review>();
 		for (Review review : reviewsList) {
+			System.out.println(review.getAuthor().getId());
+			System.out.println(user.getId());
+			System.out.println(review.getAuthor() == user);
 			if (review != null && review.getAuthor() == user) {
 				list.add(review);
 			}

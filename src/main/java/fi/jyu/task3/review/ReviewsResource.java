@@ -21,9 +21,6 @@ public class ReviewsResource {
 	private UsersService usersService = UsersService.getInstance();
 	private MoviesService moviesService = MoviesService.getInstance();
 	
-	@QueryParam("movie") Integer movieId;
-	@QueryParam("user") Integer userId;
-	
 	private Movie movie = null;
 	private User user = null;
 	
@@ -31,22 +28,26 @@ public class ReviewsResource {
 
     public ReviewsResource(Movie movie){
         this.movie = movie;
-        if (userId != null) {
-        	usersService.getUser(userId);
-        }
     }
     
     public ReviewsResource(User user){
         this.user = user;
-        if (movieId != null) {
-        	moviesService.getMovie(movieId);
-        }
     }
 
     @GET
-    public Response getReviewsList(){
+    public Response getReviewsList(
+    		@QueryParam("movie") Integer movieId,
+    		@QueryParam("author") Integer userId){
     	List<Review> reviewsList;
     	
+		if (user == null && userId != null) {
+        	user = usersService.getUser(userId);
+        }
+		
+		if (movie == null && movieId != null) {
+        	movie = moviesService.getMovie(movieId);
+        }
+		
     	if (movie == null && user == null) {
     		reviewsList = reviewsService.getReviewsList();
     	} else if (movie == null && user != null) {
