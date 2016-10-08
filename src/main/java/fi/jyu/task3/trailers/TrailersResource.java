@@ -2,6 +2,9 @@ package fi.jyu.task3.trailers;
 
 import java.net.URI;
 import java.util.*;
+
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
@@ -11,6 +14,7 @@ import fi.jyu.task3.movie.MoviesService;
 import fi.jyu.task3.review.ReviewsResource;
 
 @Path("/trailers")
+@PermitAll
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class TrailersResource {
@@ -59,6 +63,8 @@ public class TrailersResource {
     }
 
     @POST
+    @RolesAllowed("admin")
+
     public Response addTrailer(Trailer trailer, @Context UriInfo uriInfo){
     	if (movie != null) {
     		trailer.setMovie(movie);
@@ -91,6 +97,8 @@ public class TrailersResource {
     
     @DELETE
     @Path("/{id}")
+    @RolesAllowed("admin")
+
     public Response removeTrailer(@PathParam("id") int id)
     {
         try {
@@ -104,6 +112,8 @@ public class TrailersResource {
     
     @PUT
     @Path("/{id}")
+    @RolesAllowed("admin")
+
     public Response updateTrailer(@PathParam("id") int id, Trailer trailer) {
     	if (movie != null) {
     		trailer.setMovie(movie);

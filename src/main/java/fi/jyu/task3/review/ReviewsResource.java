@@ -2,6 +2,9 @@ package fi.jyu.task3.review;
 
 import java.net.URI;
 import java.util.*;
+
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
@@ -14,6 +17,7 @@ import fi.jyu.task3.user.UsersResource;
 import fi.jyu.task3.user.UsersService;
 
 @Path("/reviews")
+@PermitAll
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ReviewsResource {
@@ -75,6 +79,8 @@ public class ReviewsResource {
     }
 
     @POST
+    @RolesAllowed("admin")
+
     public Response addReview(Review review, @Context UriInfo uriInfo){
     	if (review.getContent().equals("Brew me some coffee!")) {
     		throw new IAmATeapotException();
@@ -124,6 +130,7 @@ public class ReviewsResource {
     }
     
     @DELETE
+    @RolesAllowed("admin")
     @Path("/{id}")
     public Response removeReview(@PathParam("id") int id)
     {
@@ -138,6 +145,8 @@ public class ReviewsResource {
     
     @PUT
     @Path("/{id}")
+    @RolesAllowed("admin")
+
     public Response updateReview(@PathParam("id") int id, Review review) {
     	if (review.getContent().equals("Brew me some coffee!")) {
     		throw new IAmATeapotException();

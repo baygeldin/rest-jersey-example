@@ -9,10 +9,42 @@
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>fi.jyu.task3</param-value>
         </init-param>
-        <load-on-startup>1</load-on-startup>
+	    <!-- Application -->
+    <init-param>
+        <param-name>javax.ws.rs.Application</param-name>
+        <param-value>fi.jyu.task3.security.SecurityTask3</param-value>
+    </init-param>
+        <!-- Filters -->
+   <init-param>
+       <param-name>javax.ws.rs.container.ContainerRequestFilter</param-name>
+       <param-value>
+           fi.jyu.task3.AuthFilter;
+           org.glassfish.jersey.filter.LoggingFilter;
+       </param-value>
+   </init-param>
+   <init-param>
+       <param-name>javax.ws.rs.container.ContainerResponseFilters</param-name>
+       <param-value>
+           org.glassfish.jersey.filter.LoggingFilter;
+       </param-value>
+   </init-param>
+        
+    
+    <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>Jersey Web Application</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
+     <!-- <filter>
+	    <filter-name>AuthenticationFilter</filter-name>
+	    <filter-class>fi.jyu.task3.auth.RestAuthenticationFilter</filter-class>
+  	</filter>
+	<filter-mapping>
+	    <filter-name>AuthenticationFilter</filter-name>
+	    <url-pattern>/api/*</url-pattern>
+  	</filter-mapping> -->
+  	
+  	<!-- Add Security for RESTful Web Services Using Basic Authentication  -->
+  	
 </web-app>
