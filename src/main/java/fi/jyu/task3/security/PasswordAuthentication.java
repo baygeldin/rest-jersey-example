@@ -23,8 +23,8 @@ public final class PasswordAuthentication {
 		}
 		else 
 		{
-			userToReturn.setLogin("user1");
-			userToReturn.setPassword("user1");
+			userToReturn.setLogin("member");
+			userToReturn.setPassword("member");
 			roleMembers.add("member");
 			userToReturn.setRole(roleMembers);
 			return userToReturn;
