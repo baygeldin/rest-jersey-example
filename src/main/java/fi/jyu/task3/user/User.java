@@ -5,6 +5,7 @@ import java.net.URI;
 import java.security.Principal;
 import java.util.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import fi.jyu.task3.link.Link;
 
@@ -76,6 +77,7 @@ public class User implements Principal {
 	public String getEmail() {return email;}
 	public void setEmail(String email) {this.email = email;}
 
+    @XmlTransient
 	public String getPassword() {return password;}
 	public void setPassword(String password) {this.password = password;}
 
