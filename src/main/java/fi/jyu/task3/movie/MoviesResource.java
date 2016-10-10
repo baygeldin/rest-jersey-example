@@ -19,6 +19,7 @@ public class MoviesResource {
 	private MoviesService moviesService = MoviesService.getInstance();
 	
     @GET
+    @RolesAllowed("unregistred")
     public Response getMoviesList(@QueryParam("year") int year){
     	List<Movie> movies;
     	if(year > 0)

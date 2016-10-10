@@ -37,8 +37,37 @@ public class UsersService {
 	public User getUser(int id) {
 		return usersList.get(id);
 	}
+
+    public User getUserByName(String login) {
+        for (User user : usersList) {
+            if (user.getLogin().equals(login)) {
+                return user;
+           }
+        }
+        return null;
+    }
+
+    public User approveUser(String login) {
+        List<String> roleMembers = new ArrayList<String>();
+
+        for (User user : usersList) {
+            if (user.getLogin().equals(login)) {
+                roleMembers.add("registred");
+                user.setRole(roleMembers);
+                return user;
+            }
+        }
+        return null;
+
+    }
 	
-	public synchronized User addUser(User user) {
+	public synchronized User addUser(User user, char flagReg) {
+        List <String> roleMembers = new ArrayList<String>();
+
+		if (flagReg == 'u'){
+            roleMembers.add("unregistred");
+			user.setRole(roleMembers);
+		}
 		user.setId(usersList.size());
 		usersList.add(user);
 		return user;

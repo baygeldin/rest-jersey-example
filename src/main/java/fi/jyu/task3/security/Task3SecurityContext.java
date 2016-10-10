@@ -1,5 +1,7 @@
 package fi.jyu.task3.security;
 
+import fi.jyu.task3.user.User;
+
 import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
  

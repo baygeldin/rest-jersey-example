@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
 import fi.jyu.task3.exception.ErrorMessage;
+import fi.jyu.task3.user.User;
 
 import javax.ws.rs.container.PreMatching;
   
@@ -26,6 +27,12 @@ public class AuthFilter implements ContainerRequestFilter {
 
         String auth = containerRequest.getHeaderString("authorization");
 
+        Boolean req = containerRequest.getUriInfo().getPath().contains("reg");
+
+        if (req){
+            return;
+        }
+
         if(auth == null) {
             throw new WebApplicationException(Status.UNAUTHORIZED);
         }
@@ -37,6 +44,7 @@ public class AuthFilter implements ContainerRequestFilter {
         }
   
         User authentificationResult =  PasswordAuthentication.Authentication(lap[0], lap[1]);
+
 
         // We configure your Security Context here
         String scheme = containerRequest.getUriInfo().getRequestUri().getScheme();
