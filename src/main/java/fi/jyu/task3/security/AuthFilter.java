@@ -1,17 +1,21 @@
 package fi.jyu.task3.security;
 
-import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
-import fi.jyu.task3.exception.ErrorMessage;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import fi.jyu.task3.user.User;
+import fi.jyu.task3.user.UsersService;
+
+import static fi.jyu.task3.util.Util.*;
 
 import javax.ws.rs.container.PreMatching;
-  
+
 /**
  * Jersey HTTP Basic Auth filter
  * @author Deisss (LGPLv3)
@@ -19,47 +23,54 @@ import javax.ws.rs.container.PreMatching;
 @Provider
 @PreMatching
 public class AuthFilter implements ContainerRequestFilter {
-    private static final CharSequence SECURED_URL_PREFIX = "secure";
-
 	@Override
     public void filter(ContainerRequestContext containerRequest) throws WebApplicationException {
-    	
+        String auth = containerRequest.getHeaderString("Authorization");
+        User user = null;
 
-        String auth = containerRequest.getHeaderString("authorization");
-
-        Boolean req = containerRequest.getUriInfo().getPath().contains("reg");
-
-        if (req){
+        if (auth == null || containerRequest.getUriInfo().getPath().contains("reg")) {
             return;
         }
 
-        if(auth == null) {
-            throw new WebApplicationException(Status.UNAUTHORIZED);
-        }
-  
-        String[] lap = BasicAuth.decode(auth);
-  
-        if(lap == null || lap.length != 2) {
-            throw new WebApplicationException(Status.UNAUTHORIZED);
-        }
-  
-        User authentificationResult =  PasswordAuthentication.Authentication(lap[0], lap[1]);
+        if (auth.matches("^[B|b]asic.*$")) {
+            String[] credentials = base64Decode(auth.replaceFirst("[B|b]asic ", "")).split(":", 2);
 
+            user = UsersService.getInstance().getUserByName(credentials[0]);
 
-        // We configure your Security Context here
+            if (user == null) {
+                throw new BadRequestException();
+            }
+
+            if (!user.getPassword().equals(credentials[1])) {
+                throw new ForbiddenException();
+            }
+        } else if (auth.matches("^[B|b]earer.*$")) {
+            String[] jwt = auth.replaceFirst("[B|b]earer ", "").split("\\.");
+
+            Gson gson = new Gson();
+            JsonElement payload = gson.fromJson(base64Decode(jwt[1]), JsonElement.class);
+            String login = payload.getAsJsonObject().get("login").getAsString();
+
+            user = UsersService.getInstance().getUserByName(login);
+
+            if (user == null) {
+                throw new BadRequestException();
+            }
+
+            String signature = null;
+
+            try {
+                signature = base64Encode(encodeHS256(getSecret(), jwt[0] + "." + jwt[1]));
+            } catch (Exception e) {
+                throw new InternalServerErrorException();
+            }
+
+            if (signature == null || !jwt[2].equals(signature)) {
+                throw new ForbiddenException();
+            }
+        }
+
         String scheme = containerRequest.getUriInfo().getRequestUri().getScheme();
-        containerRequest.setSecurityContext(new Task3SecurityContext(authentificationResult, scheme));
-        
-        if ((containerRequest.getUriInfo().getPath().contains(SECURED_URL_PREFIX))
-        		|| (containerRequest.getMethod().equals("DELETE")) || (containerRequest.getMethod().equals("POST"))) {
-		
-			if (authentificationResult!=null) return;
-    		
-			ErrorMessage errorMessage = new ErrorMessage("User cannot access the resource.", 401,
-                    "http://myDocs.org");
-            Response unauthorizedStatus = Response.status(Response.Status.UNAUTHORIZED).entity(errorMessage).build();
-            containerRequest.abortWith(unauthorizedStatus);
-        }
-        
+        containerRequest.setSecurityContext(new Task3SecurityContext(user, scheme));
     }
 }

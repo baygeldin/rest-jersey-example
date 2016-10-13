@@ -14,6 +14,11 @@ public class UsersService {
     public synchronized static UsersService getInstance(){
 		if(instance == null){
 			instance = new UsersService();
+			List<String> adminRole = new ArrayList<String>();
+			adminRole.add("admin");
+			User admin = new User("admin", "admin", "Admin", new Date());
+			admin.setRole(adminRole);
+			instance.addUser(admin, 'r');
 	    }
 		
 	    return instance;

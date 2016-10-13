@@ -20,8 +20,9 @@ public class User implements Principal {
     
     public User(){}
     
-    public User(int id, String name, Date birth) {
-        this.setId(id);
+    public User(String login, String password, String name, Date birth) {
+        this.setLogin(login);
+        this.setPassword(password);
         this.setName(name);
         this.setBirth(birth);
     }
@@ -77,7 +78,6 @@ public class User implements Principal {
 	public String getEmail() {return email;}
 	public void setEmail(String email) {this.email = email;}
 
-    @XmlTransient
 	public String getPassword() {return password;}
 	public void setPassword(String password) {this.password = password;}
 

@@ -32,6 +32,14 @@
     
     <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>JWTServlet</servlet-name>
+        <servlet-class>fi.jyu.task3.security.JWTServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JWTServlet</servlet-name>
+        <url-pattern>/get_token</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Jersey Web Application</servlet-name>
         <url-pattern>/api/*</url-pattern>
