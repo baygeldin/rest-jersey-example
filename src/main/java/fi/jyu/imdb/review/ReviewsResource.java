@@ -63,11 +63,11 @@ public class ReviewsResource {
         
     	return Response.ok(entity).build();
     }
-    
-    @Path("/{id}")
+
     @GET
+    @Path("/{id}")
     public Response getReview(@PathParam("id") int id){
-        Review review = null;
+        Review review;
         
         try {
         	review = reviewsService.getReview(id);
@@ -93,7 +93,7 @@ public class ReviewsResource {
     	}
     	
     	if (user != null) {
-            if (!sc.isUserInRole("admin") && user != (User) sc.getUserPrincipal()) {
+            if (!sc.isUserInRole("admin") && user != sc.getUserPrincipal()) {
                 throw new ForbiddenException();
             }
     		review.setAuthor(user);

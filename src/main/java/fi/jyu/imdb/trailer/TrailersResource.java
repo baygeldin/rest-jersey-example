@@ -46,11 +46,11 @@ public class TrailersResource {
         
     	return Response.ok(entity).build();
     }
-    
-    @Path("/{id}")
+
     @GET
+    @Path("/{id}")
     public Response getTrailer(@PathParam("id") int id){
-    	Trailer trailer = null;
+    	Trailer trailer;
         
         try {
         	trailer = trailersService.getTrailer(id);

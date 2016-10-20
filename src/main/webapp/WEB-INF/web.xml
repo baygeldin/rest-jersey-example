@@ -11,7 +11,7 @@
         </init-param>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>fi.jyu.imdb.security.SecurityTask3</param-value>
+            <param-value>fi.jyu.imdb.security.SecurityConfig</param-value>
         </init-param>
         <init-param>
             <param-name>javax.ws.rs.container.ContainerRequestFilter</param-name>

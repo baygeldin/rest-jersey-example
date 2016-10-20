@@ -12,7 +12,6 @@ import javax.xml.bind.ValidationException;
 
 import fi.jyu.imdb.review.ReviewsResource;
 
-@PermitAll
 @Path("/users")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -56,12 +55,11 @@ public class UsersResource {
     	return Response.created(uri)
         			   .entity(newUser).build();
     }
-    
-    @Path("/{id}")
+
     @GET
-    @PermitAll
+    @Path("/{id}")
     public Response getUser(@PathParam("id") int id){
-        User user = null;
+        User user;
         
         try {
         	user = usersService.getUser(id);
@@ -73,8 +71,8 @@ public class UsersResource {
     }
     
     @DELETE
-    @RolesAllowed("admin")
     @Path("/{id}")
+    @RolesAllowed("admin")
     public Response removeUser(@PathParam("id") int id)
     {
         try {

@@ -1,1 +1,3 @@
-toDo: Implement User registration and extra-requirement
+# Fake IMDB RESTful API
+
+Example of RESTful API with authorization. Keywords: Java, Jersey, JAXB, JAX-RS, JWT, Basic Auth, REST.

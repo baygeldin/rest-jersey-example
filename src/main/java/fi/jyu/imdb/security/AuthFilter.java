@@ -32,7 +32,11 @@ public class AuthFilter implements ContainerRequestFilter {
             return;
         }
 
+        String authScheme = null;
+
         if (auth.matches("^[B|b]asic.*$")) {
+            authScheme = javax.ws.rs.core.SecurityContext.BASIC_AUTH;
+
             String[] credentials = base64Decode(auth.replaceFirst("[B|b]asic ", "")).split(":", 2);
 
             user = UsersService.getInstance().getUserByLogin(credentials[0]);
@@ -45,6 +49,8 @@ public class AuthFilter implements ContainerRequestFilter {
                 throw new ForbiddenException();
             }
         } else if (auth.matches("^[B|b]earer.*$")) {
+            authScheme = "JWT";
+
             String[] jwt = auth.replaceFirst("[B|b]earer ", "").split("\\.");
 
             Gson gson = new Gson();
@@ -57,7 +63,7 @@ public class AuthFilter implements ContainerRequestFilter {
                 throw new BadRequestException();
             }
 
-            String signature = null;
+            String signature;
 
             try {
                 signature = base64Encode(encodeHS256(getSecret(), jwt[0] + "." + jwt[1]));
@@ -71,6 +77,6 @@ public class AuthFilter implements ContainerRequestFilter {
         }
 
         String scheme = containerRequest.getUriInfo().getRequestUri().getScheme();
-        containerRequest.setSecurityContext(new SecurityContext(user, scheme));
+        containerRequest.setSecurityContext(new SecurityContext(user, scheme, authScheme));
     }
 }
